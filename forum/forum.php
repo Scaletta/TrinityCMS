@@ -62,18 +62,22 @@ Search.init('ta/lookup');
 <div class="content-trail">
 <ol class="ui-breadcrumb">
 <?php if($_GET['f'] != ""){
-$forumid = intval($_GET['f']);
-$get_forum = mysql_query("SELECT * FROM forum_forums WHERE id = '".$forumid."'");
-$forum = mysql_fetch_assoc($get_forum)or $error=1;
-$get_category = mysql_query("SELECT * FROM forum_categ WHERE id = '".$forum['categ']."'");
-$category = mysql_fetch_assoc($get_category)or $error=1;
-$get_threads = mysql_query("SELECT * FROM forum_threads WHERE forumid = '".$forum['id']."'");
-echo '
-<li><a href="'.$website['root'].'index.php" rel="np">World of Warcraft</a></li>
-<li><a href="index.php" rel="np">Forums</a></li>
-<li><a href="index.php" rel="np">'.$category['name'].'</a></li>
-<li class="last"><a href="#" rel="np">'.$forum['name'].'</a></li>
-';
+	$forumid = intval($_GET['f']);
+	$get_forum = mysql_query("SELECT * FROM forum_forums WHERE id = '".$forumid."'");
+	$forum = mysql_fetch_assoc($get_forum)or $error=1;
+	$get_category = mysql_query("SELECT * FROM forum_categ WHERE id = '".$forum['categ']."'");
+	$category = mysql_fetch_assoc($get_category)or $error=1;
+	$get_threads = mysql_query("SELECT * FROM forum_threads WHERE forumid = '".$forum['id']."'");
+	
+	echo '
+	<li><a href="'.$website['root'].'index.php" rel="np">World of Warcraft</a></li>
+	<li><a href="index.php" rel="np">Forums</a></li>
+	<li><a href="index.php" rel="np">'.$category['name'].'</a></li>
+	<li class="last"><a href="#" rel="np">'.$forum['name'].'</a></li>
+	';
+	
+	/* small fix */
+	$error = 0;
 }else{ $error=1; }
 if($error == 1){
 echo '
@@ -124,26 +128,30 @@ echo '
         </div>
 
 		<a class="ui-button button1 imgbutton " href="index.php"><span><span><span class="back-arrow"> </span></span></span></a>
-		<?php if($forum['locked'] == 1){
-		mysql_select_db($server_db,$connection_setup)or print($lang['db']);
-		$posterInfo = mysql_fetch_assoc(mysql_query("SELECT * FROM users WHERE id = '".$account_information['id']."'"));
-		switch($posterInfo['class']){
-		case blizz:
-		echo'<a class="ui-button button1" href="createthread.php?f='.$forumid.'"><span><span>Create Thread</span></span></a>';
-		break;
-		case mvp:
-		echo'<a class="ui-button button1" href="createthread.php?f='.$forumid.'"><span><span>Create Thread</span></span></a>';
-		break;
-		default:
-		echo'<a class="ui-button button1 disabled" href="#"><span><span>Create Thread</span></span></a>';
-		break;
-		}
+		<?php
+		if(isset($_SESSION['username'])){
+			if($forum['locked'] == 1){
+				mysql_select_db($server_db,$connection_setup)or print($lang['db']);
+				
+				$posterInfo = mysql_fetch_assoc(mysql_query("SELECT * FROM users WHERE id = '".$account_information['id']."'"));
+					switch($posterInfo['class']){
+						case blizz:
+							echo'<a class="ui-button button1" href="createthread.php?f='.$forumid.'"><span><span>Create Thread</span></span></a>';
+							break;
+							
+						case mvp:
+							echo'<a class="ui-button button1" href="createthread.php?f='.$forumid.'"><span><span>Create Thread</span></span></a>';
+							break;
+							
+						default:
+							echo'<a class="ui-button button1 disabled" href="#"><span><span>Create Thread</span></span></a>';
+							break;
+					}
+			}else{
+				echo'<a class="ui-button button1" href="createthread.php?f='.$forumid.'"><span><span>Create Thread</span></span></a>';
+			}
 		}else{
-		if($_SESSION['username'] != ""){
-		echo'<a class="ui-button button1" href="createthread.php?f='.$forumid.'"><span><span>Create Thread</span></span></a>';
-		}else{
-		echo'<a class="ui-button button1 disabled" href="#"><span><span>Create Thread</span></span></a>';
-		}
+			echo '<a class="ui-button button1 disabled"><span><span>Create Thread</span></span></a>';
 		}
 		?>
 		<span class="clear"><!-- --></span>
@@ -275,26 +283,30 @@ echo '
 					<a href="#">Next &gt;</a>-->
 				</div>
 				<a class="ui-button button1 imgbutton " href="index.php"><span><span><span class="back-arrow"> </span></span></span></a>
-				<?php if($forum['locked'] == 1){
-				mysql_select_db($server_db,$connection_setup)or print($lang['db']);
-				$posterInfo = mysql_fetch_assoc(mysql_query("SELECT * FROM users WHERE id = '".$account_information['id']."'"));
-				switch($posterInfo['class']){
-				case blizz:
-				echo'<a class="ui-button button1" href="#"><span><span>Create Thread</span></span></a>';
-				break;
-				case mvp:
-				echo'<a class="ui-button button1" href="#"><span><span>Create Thread</span></span></a>';
-				break;
-				default:
-				echo'<a class="ui-button button1 disabled" href="#"><span><span>Create Thread</span></span></a>';
-				break;
-				}
+				<?php
+				if(isset($_SESSION['username'])){
+					if($forum['locked'] == 1){
+						mysql_select_db($server_db,$connection_setup)or print($lang['db']);
+						
+						$posterInfo = mysql_fetch_assoc(mysql_query("SELECT * FROM users WHERE id = '".$account_information['id']."'"));
+							switch($posterInfo['class']){
+								case blizz:
+									echo'<a class="ui-button button1" href="createthread.php?f='.$forumid.'"><span><span>Create Thread</span></span></a>';
+									break;
+									
+								case mvp:
+									echo'<a class="ui-button button1" href="createthread.php?f='.$forumid.'"><span><span>Create Thread</span></span></a>';
+									break;
+									
+								default:
+									echo'<a class="ui-button button1 disabled" href="#"><span><span>Create Thread</span></span></a>';
+									break;
+							}
+					}else{
+						echo'<a class="ui-button button1" href="createthread.php?f='.$forumid.'"><span><span>Create Thread</span></span></a>';
+					}
 				}else{
-				if($_SESSION['username'] != ""){
-				echo'<a class="ui-button button1" href="#"><span><span>Create Thread</span></span></a>';
-				}else{
-				echo'<a class="ui-button button1 disabled" href="#"><span><span>Create Thread</span></span></a>';
-				}
+					echo '<a class="ui-button button1 disabled"><span><span>Create Thread</span></span></a>';
 				}
 				?>
 				<span class="clear"><!-- --></span>

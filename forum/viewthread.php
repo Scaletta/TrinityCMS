@@ -59,10 +59,10 @@ Flash.ratingImage = 'http://eu.media.blizzard.com/wow/player/rating-pegi.jpg';
 <?php
 function postX($content,$class){
 switch($class){
-	case blizz:
+	case "blizz":
 	$content=str_replace("[quote]", "<blockquote class=\"quote-blizzard\">",$content);
 	break;
-	case mvp:
+	case "mvp":
 	$content=str_replace("[quote]", "<blockquote class=\"quote-mvp\">",$content);
 	break;
 	default:
@@ -95,20 +95,27 @@ return $content;
 <div class="content-top">
 <div class="content-trail">
 <ol class="ui-breadcrumb">
-<?php if($_GET['t'] != ""){
-$tid = intval($_GET['t']);
-$thread = mysql_fetch_assoc(mysql_query("SELECT * FROM forum_threads WHERE id = '".$tid."'"))or $error=1;
-$update = mysql_query("UPDATE forum_threads SET views = views + 1 WHERE id = '".$thread['id']."'");
-$forum = mysql_fetch_assoc(mysql_query("SELECT * FROM forum_forums WHERE id = '".$thread['forumid']."'"))or $error=1;
-$category = mysql_fetch_assoc(mysql_query("SELECT * FROM forum_categ WHERE id = '".$forum['categ']."'"))or $error=1;
-$userInfo = mysql_fetch_assoc(mysql_query("SELECT * FROM users WHERE id = '".$account_information['id']."'"));
-echo '
-<li><a href="'.$website['root'].'index.php" rel="np">World of Warcraft</a></li>
-<li><a href="index.php" rel="np">Forums</a></li>
-<li><a href="index.php" rel="np">'.$category['name'].'</a></li>
-<li><a href="forum.php?f='.$forum['id'].'" rel="np">'.$forum['name'].'</a></li>
-<li class="last"><a href="viewthread.php?t='.$thread['id'].'" rel="np">'.$thread['name'].'</a></li>
-';
+<?php
+if($_GET['t'] != ""){
+
+	$tid = intval($_GET['t']);
+	$thread = mysql_fetch_assoc(mysql_query("SELECT * FROM forum_threads WHERE id = '".$tid."'"))or $error=1;
+	$update = mysql_query("UPDATE forum_threads SET views = views + 1 WHERE id = '".$thread['id']."'");
+	$forum = mysql_fetch_assoc(mysql_query("SELECT * FROM forum_forums WHERE id = '".$thread['forumid']."'"))or $error=1;
+	$category = mysql_fetch_assoc(mysql_query("SELECT * FROM forum_categ WHERE id = '".$forum['categ']."'"))or $error=1;
+	if(isset($_SESSION['username'])){
+		$userInfo = mysql_fetch_assoc(mysql_query("SELECT * FROM users WHERE id = '".$account_information['id']."'"));
+	}
+	echo '
+	<li><a href="'.$website['root'].'index.php" rel="np">World of Warcraft</a></li>
+	<li><a href="index.php" rel="np">Forums</a></li>
+	<li><a href="index.php" rel="np">'.$category['name'].'</a></li>
+	<li><a href="forum.php?f='.$forum['id'].'" rel="np">'.$forum['name'].'</a></li>
+	<li class="last"><a href="viewthread.php?t='.$thread['id'].'" rel="np">'.$thread['name'].'</a></li>
+	';
+
+	/*sweet fix*/
+	$error = 0;
 }else{ $error=1; }
 if($error == 1){
 echo '
@@ -116,7 +123,7 @@ echo '
 <li class="last"><a href="index.php" rel="np">Forums</a></li>
 ';
 }else{
-	if($_POST['detail'] != ""){
+	if(isset($_POST['detail']) && $_POST['detail'] != ""){
 		$reply = stripslashes($_POST['detail']);
         $reply = nl2br($reply);
 		$reply = strip_tags($reply);
@@ -182,14 +189,18 @@ echo '
 		<div class="forum-actions top">
 		<div class="actions-panel">
 		<a class="ui-button button1 imgbutton " href="#"><span><span><span class="back-arrow"> </span></span></span></a>';
-		if($thread['locked'] == 1){
-			if($userinfo['class'] == ""){
-				echo '<a class="ui-button button1 disabled " href="javascript:;"><span><span>Add a reply</span></span></a>';
+		if(isset($_SESSION['username'])){
+			if($thread['locked'] == 1){
+				if($userinfo['class'] == ""){
+					echo '<a class="ui-button button1 disabled " href="javascript:;"><span><span>Add a reply</span></span></a>';
+				}else{
+					echo '<a class="ui-button button1" href="javascript:;"><span><span>Add a reply</span></span></a>';
+				}
 			}else{
 				echo '<a class="ui-button button1" href="javascript:;"><span><span>Add a reply</span></span></a>';
 			}
 		}else{
-			echo '<a class="ui-button button1" href="javascript:;"><span><span>Add a reply</span></span></a>';
+			echo '<a class="ui-button button1 disabled " href="javascript:;"><span><span>Add a reply</span></span></a>';
 		}
 		echo'		
 		<span class="clear"><!-- --></span>
@@ -200,10 +211,10 @@ echo '
         <div id="thread">
 			';
 			switch($posterInfo['class']){
-			case blizz:
+			case "blizz":
 			echo '<div id="post-1" class="post blizzard">';
 			break;
-			case mvp:
+			case "mvp":
 			echo '<div id="post-1" class="post mvp">';
 			break;
 			default:
@@ -246,10 +257,10 @@ echo '
 			<a href="javascript:;" class="context-link" rel="np">'.strtolower($posterAccount['username']).'</a>
 			</div>';
 			switch($posterInfo['class']){
-			case blizz:
+			case "blizz":
 			echo '<div class="blizzard-title">Staff Member</div>';
 			break;
-			case mvp:
+			case "mvp":
 			echo '<div class="mvp-title">Moderator</div>';
 			break;
 			default:
@@ -288,11 +299,23 @@ echo '
 				</div>
             </td>
 			</tr>
-			</table>
-            
-			<div class="post-options">';
-			if($thread['locked'] == 1){
-				if($userInfo['class'] != ""){
+			</table>';
+            if(isset($_SESSION['username'])){
+				echo'
+				<div class="post-options">';
+				if($thread['locked'] == 1){
+					if($userInfo['class'] != ""){
+						echo '
+						<div class="respond">
+						<a class="ui-button button2 " href="#new-post">
+						<span><span>Reply</span></span></a>
+						<a class="ui-button button2 " href="#new-post" onclick="Cms.Topic.quote('.$i.');">
+						<span><span><span class="icon-quote">Quote</span></span></span></a>
+						</div>';
+					}else{
+						echo '<div class="no-post-options"><!-- --></div>';
+					}
+				}else{
 					echo '
 					<div class="respond">
 					<a class="ui-button button2 " href="#new-post">
@@ -300,23 +323,14 @@ echo '
 					<a class="ui-button button2 " href="#new-post" onclick="Cms.Topic.quote('.$i.');">
 					<span><span><span class="icon-quote">Quote</span></span></span></a>
 					</div>';
-				}else{
-					echo '<div class="no-post-options"><!-- --></div>';
 				}
-			}else{
-				echo '
-				<div class="respond">
-				<a class="ui-button button2 " href="#new-post">
-				<span><span>Reply</span></span></a>
-				<a class="ui-button button2 " href="#new-post" onclick="Cms.Topic.quote('.$i.');">
-				<span><span><span class="icon-quote">Quote</span></span></span></a>
-				</div>';
+				echo'
+				<span class="clear"><!-- --></span>
+				</div>
+				';
 			}
-			echo'
-			<span class="clear"><!-- --></span>
-            </div>
-			</div>
-            </div>';
+			
+			echo '</div></div>';
 			
 			$get_replies = mysql_query("SELECT * FROM forum_replies WHERE threadid = '".$thread['id']."' ORDER BY id ASC");
 			if(mysql_num_rows($get_replies) > 0){
@@ -450,16 +464,20 @@ echo '
 
 		<div class="talkback">
 		<?php
-		if($thread['locked'] == "1"){
-			if($userInfo['class'] == ""){
-				$post=0;
+		if(!isset($_SESSION['username'])){
+			$post=0;
+		}else{
+			if($thread['locked'] == "1"){
+				if($userInfo['class'] == ""){
+					$post=0;
+				}else{
+					$post=1;
+				}
 			}else{
 				$post=1;
 			}
-		}else{
-			$post=1;
 		}
-		if($_SESSION['username'] == "") $post=0;
+		
 		if($post == 1){
 		?>
 			<a id="new-post"></a>
@@ -540,7 +558,7 @@ echo '
 			<input type="hidden" name="xstoken" value="ed99faf5-4a8e-4629-afef-393a260c3fd4" />
 			<div class="post general">
 			<table class="dynamic-center"><tr><td>
-			<?php if($_SESSION['username'] != ""){
+			<?php if(isset($_SESSION['username'])){
 			echo 'This thread is locked'; }else{
 			echo 'In order to post you must to be logged in';
 			} ?>
