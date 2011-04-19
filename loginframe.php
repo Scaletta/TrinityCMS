@@ -1,7 +1,6 @@
 <?php
 $page="loginframe.php";
 include("configs.php");
-session_start();
 ?>
 <!DOCTYPE html>
   <html xmlns="http://www.w3.org/1999/xhtml">
@@ -38,7 +37,7 @@ session_start();
       <h2>World of Warcraft</h2>
   <?php
   
-  if(!$_SESSION['username']){
+  if(!isset($_SESSION['username'])){
   if(isset($_POST['accountName'])){
     $accountName = stripslashes($_POST['accountName']);
     $accountPass = stripslashes($_POST['password']);
