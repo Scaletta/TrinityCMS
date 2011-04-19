@@ -40,8 +40,7 @@ Flash.ratingImage = 'http://eu.media.blizzard.com/wow/player/rating-pegi.jpg';
 //]]>
 </script>
 </head>
-<body class="en-gb game-index"><div id="predictad_div" class="predictad" style="display: none; left: 788px; top: 104px; width: 321px; "></div>
-
+<body class="en-gb game-index">
 <div id="wrapper">
 <?php $page_cat="game"; include("header.php"); ?>
 <div id="content">
@@ -55,44 +54,60 @@ Flash.ratingImage = 'http://eu.media.blizzard.com/wow/player/rating-pegi.jpg';
 <div class="content-bot">
 
 		<div class="left-col">
+			<br />
 			<div class="section-title">
-				<span>Welcome to the<br />World of Warcraft Game Guide</span>
-				<p>Your life as a hero will take you to the far ends of a world of magic, mystery, and unlimited adventure. This section is designed to help you on your first steps into the epic fantasy of World of Warcraft.</p>
+				<style type="text/css">
+					.section-title p{
+						text-shadow:0px 0px 5px #000;
+					}
+					
+					blockquote
+					{	
+						height:16px;
+						background:rgba(0,0,0,0.3);
+						padding:8px;
+						margin-left:70px;
+						font-size:15px;
+						color:#FF6A00;
+						border:dashed 1px rgba(255,106,0,0.3);
+					}
+					
+					#online{
+						color:#00CE18;
+						text-shadow:0px -1px 7px #000;
+					}
+					
+					#offline{
+						color:#FF0000;
+						text-shadow:0px -1px 7px #000;
+					}
+				</style>
+				<span>Welcome to the<br/>World of Warcraft Game Guide</span>
+				<p>In this article you will find out how to connect to our server.</p>
+				<br /><br />
+				<p>First, you need to download <a href="">World of Warcraft Cataclysm</a>.</p>
+				<p>The second step is to update it until patch 4.0.6a</p>
+				<p>Next step. <a href="">Create</a> your account</p>
+				<p><a href="">Download this</a> client and copy into your WoW Installation directory</p>
+				<p>Change realmlist.wtf (located into your WoW/Data/enUS(or)enGB/ directory) with :</p><br />
+					<blockquote>,, set realmlist theadriann.zapto.org "</blockquote>
+				<br />
+				<p>Now ensure that the realm is online and have fun!</p>
+				<br />
+				<center>
+				<img src="<?php echo $website['root']; ?>images/game/realm_status.png"/><br />
+				<?php
+				/* To Lazy Now */
+				$status = "offline";
+				if($status == "online"){
+					echo '<span id="online">Online</span>';
+				}else if($status == "offline"){
+					echo '<span id="offline">Offline</span>';
+				}
+				?>
+				</center>
 			</div>
-			<div class="main-game-contents">
-<a href="javascript:;" class="main-content-banner left-bnr bnr04" style="background-image:url('wow/static/images/game/landing/thumb-main-content-1.jpg');">
-	<span class="banner-title">Beginner's Guide</span>
-	<span class="banner-desc">Coming soon!</span>
-</a>
-<a href="javascript:;" class="main-content-banner right-bnr bnr04" style="background-image:url('wow/static/images/game/landing/thumb-main-content-2.jpg');">
-	<span class="banner-title">Races</span>
-	<span class="banner-desc">Coming soon!</span>
-</a>
-<a href="javascript:;" class="main-content-banner left-bnr bnr04" style="background-image:url('wow/static/images/game/landing/thumb-main-content-3.jpg');">
-	<span class="banner-title">Classes</span>
-	<span class="banner-desc">Coming soon!</span>
-</a>
-<a href="javascript:;" class="main-content-banner right-bnr bnr04" style="background-image:url('wow/static/images/game/landing/thumb-main-content-4.jpg');">
-	<span class="banner-title">Patch Notes</span>
-	<span class="banner-desc">Coming soon!</span>
-</a>
-	<span class="clear"><!-- --></span>
-			</div>
-			<div class="upcoming-contents">
-				<span>Upcoming Content...</span>
-				<ul>
-						<li class="col-1">Professions</li>
-						<li class="col-2">Expansion Features</li>
-						<li class="col-3">Armory &amp; Tools</li>
-						<li class="col-4">Warcraft Lore</li>
-						<li class="col-5">Player Versus Player</li>
-						<li class="col-6">The Map Room</li>
-						<li class="col-7">Dungeons &amp; Raids</li>
-						<li class="col-8">Event Calendar</li>
-						<li class="col-9">FAQs</li>
-				</ul>
-	<span class="clear"><!-- --></span>
-			</div>
+
 		</div>
 		<div class="right-col">
 			<div class="sub-game-contents">

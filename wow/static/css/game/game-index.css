@@ -1,11 +1,11 @@
 @charset "utf-8";
 
 .game-index #content .content-top { background: url("../../images/game/landing/bg-top.jpg") 0 0 no-repeat; }
-.game-index #content .content-bot { background: url("../../images/game/landing/bg-bottom.jpg") 0 100% no-repeat; }
+.game-index #content .content-bot { height:100%;background: url("../../images/game/landing/bg-bottom.jpg") 0 100% no-repeat; }
 
 .section-title {height:253px; padding-left:28px;}
 .section-title span {color:#efe3d2; font-size:26px; line-height:32px; display:block; padding-top:40px;}
-.section-title p {color:#d3ac6b; font-size:12px; line-height:18px; margin:10px 0 0 0; width:330px;}
+.section-title p {color:#d3ac6b; font-size:12px; line-height:18px; margin:10px 0 0 0; width:530px;}
 
 .game-index #content .left-col {width:647px; float:left;}
 .game-index #content .right-col {width:345px; float:left;}

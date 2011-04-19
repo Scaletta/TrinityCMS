@@ -109,7 +109,7 @@ Flash.ratingImage = 'http://eu.media.blizzard.com/wow/player/rating-pegi.jpg';
 					</h3>
 					
 						<div class="header-image">
-							<img alt="" src="news/new_aheader.jpg" />
+							<img alt="" src="<?php echo $website['root']; ?>news/new_aheader.jpg" />
 						</div>
 
 					<div class="detail">
