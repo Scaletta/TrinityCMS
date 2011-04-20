@@ -111,6 +111,7 @@ echo '
 <li class="last"><a href="createthread.php?f='.$forumid.'" rel="np">New Topic</a></li>
 </ol>
 ';
+$error=0;
 }else{ $error=1; }
 if($error == 1){
 echo '
@@ -140,7 +141,7 @@ echo '<meta http-equiv="refresh" content="2;url=index.php"/>';
 	echo '<center>
 	<h3>Creating Thread...</h3><br />
 	<div class="loader"></div><br />';
-	if(count($errorx) > 0){
+	if(isset($errorx) && count($errorx) > 0){
 		echo '<div class="errors">';
 		foreach($errorx as $errors){ echo "<font color='red'>*".$errors."</font><br />"; }
 		echo '</div>';

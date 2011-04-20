@@ -191,7 +191,7 @@ echo '
 		<a class="ui-button button1 imgbutton " href="#"><span><span><span class="back-arrow"> </span></span></span></a>';
 		if(isset($_SESSION['username'])){
 			if($thread['locked'] == 1){
-				if($userinfo['class'] == ""){
+				if($userInfo['class'] == ""){
 					echo '<a class="ui-button button1 disabled " href="javascript:;"><span><span>Add a reply</span></span></a>';
 				}else{
 					echo '<a class="ui-button button1" href="javascript:;"><span><span>Add a reply</span></span></a>';
@@ -309,7 +309,7 @@ echo '
 						<div class="respond">
 						<a class="ui-button button2 " href="#new-post">
 						<span><span>Reply</span></span></a>
-						<a class="ui-button button2 " href="#new-post" onclick="Cms.Topic.quote('.$i.');">
+						<a class="ui-button button2 " href="#new-post" onclick="Cms.Topic.quote('.$thread['id'].');">
 						<span><span><span class="icon-quote">Quote</span></span></span></a>
 						</div>';
 					}else{
@@ -320,7 +320,7 @@ echo '
 					<div class="respond">
 					<a class="ui-button button2 " href="#new-post">
 					<span><span>Reply</span></span></a>
-					<a class="ui-button button2 " href="#new-post" onclick="Cms.Topic.quote('.$i.');">
+					<a class="ui-button button2 " href="#new-post" onclick="Cms.Topic.quote('.$thread['id'].');">
 					<span><span><span class="icon-quote">Quote</span></span></span></a>
 					</div>';
 				}
@@ -342,10 +342,10 @@ echo '
                 $posterInfo = mysql_fetch_assoc(mysql_query("SELECT * FROM users WHERE id = '".$posterAccount['id']."'"));
 				
 				switch($posterInfo['class']){
-				case blizz:
+				case "blizz":
 				echo '<div id="post-'.$i.'" class="post blizzard">';
 				break;
-				case mvp:
+				case "mvp":
 				echo '<div id="post-'.$i.'" class="post mvp">';
 				break;
 				default:
@@ -387,10 +387,10 @@ echo '
 				<a href="javascript:;" class="context-link" rel="np">'.strtolower($posterAccount['username']).'</a>
 				</div>';
 				switch($posterInfo['class']){
-				case blizz:
+				case "blizz":
 				echo '<div class="blizzard-title">Staff Member</div>';
 				break;
-				case mvp:
+				case "mvp":
 				echo '<div class="mvp-title">Moderator</div>';
 				break;
 				default:
@@ -430,8 +430,20 @@ echo '
 				</table>
 				
 				<div class="post-options">';
-				if($thread['locked'] == 1){
-					if($userInfo['class'] != ""){
+				if(isset($_SESSION['username'])){
+					if($thread['locked'] == 1){
+						if($userInfo['class'] != ""){
+							echo '
+							<div class="respond">
+							<a class="ui-button button2 " href="#new-post">
+							<span><span>Reply</span></span></a>
+							<a class="ui-button button2 " href="#new-post" onclick="Cms.Topic.quote('.$i.');">
+							<span><span><span class="icon-quote">Quote</span></span></span></a>
+							</div>';
+						}else{
+							echo '<div class="no-post-options"><!-- --></div>';
+						}
+					}else{
 						echo '
 						<div class="respond">
 						<a class="ui-button button2 " href="#new-post">
@@ -439,19 +451,8 @@ echo '
 						<a class="ui-button button2 " href="#new-post" onclick="Cms.Topic.quote('.$i.');">
 						<span><span><span class="icon-quote">Quote</span></span></span></a>
 						</div>';
-					}else{
-						echo '<div class="no-post-options"><!-- --></div>';
 					}
-				}else{
-					echo '
-					<div class="respond">
-					<a class="ui-button button2 " href="#new-post">
-					<span><span>Reply</span></span></a>
-					<a class="ui-button button2 " href="#new-post" onclick="Cms.Topic.quote('.$i.');">
-					<span><span><span class="icon-quote">Quote</span></span></span></a>
-					</div>';
-				}
-				echo'
+				}				echo'
 				<span class="clear"><!-- --></span>
 				</div>
 				</div>
