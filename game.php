@@ -73,11 +73,27 @@ Flash.ratingImage = 'http://eu.media.blizzard.com/wow/player/rating-pegi.jpg';
 					}
 					
 					#online{
+						width:100px;
+						background:rgba(0,0,0,0.3);
+						-webkit-border-radius: 3px;
+						-moz-border-radius: 3px;
+						border-radius: 3px;
+						-webkit-box-shadow : 0px 3px 5px 0px rgba(0,0,0,0.5);
+						-moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+						box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
 						color:#00CE18;
 						text-shadow:0px -1px 7px #000;
 					}
 					
 					#offline{
+						width:100px;
+						background:rgba(0,0,0,0.3);
+						-webkit-border-radius: 3px;
+						-moz-border-radius: 3px;
+						border-radius: 3px;
+						-webkit-box-shadow : 0px 3px 5px 0px rgba(0,0,0,0.5);
+						-moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+						box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
 						color:#FF0000;
 						text-shadow:0px -1px 7px #000;
 					}
@@ -96,13 +112,14 @@ Flash.ratingImage = 'http://eu.media.blizzard.com/wow/player/rating-pegi.jpg';
 				<br />
 				<center>
 				<img src="<?php echo $website['root']; ?>images/game/realm_status.png"/><br />
+				<br />
 				<?php
 				/* To Lazy Now */
 				$status = "offline";
 				if($status == "online"){
-					echo '<span id="online">Online</span>';
+					echo '<div id="online">Online</span>';
 				}else if($status == "offline"){
-					echo '<span id="offline">Offline</span>';
+					echo '<div id="offline">Offline</span>';
 				}
 				?>
 				</center>

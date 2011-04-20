@@ -63,7 +63,7 @@ include("configs.php");
       <h3>Logging In</h3><br />
       <div class="loader"></div>
       <?php
-        if($sha_pass_hash == $login['sha_pass_hash']){
+        if(strtoupper($sha_pass_hash) == $login['sha_pass_hash']){
           $_SESSION['username']=$accountName;
           echo '<br /><br /><meta http-equiv="refresh" content="2"/>';
         }else{

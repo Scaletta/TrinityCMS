@@ -135,11 +135,11 @@ echo '
 				
 				$posterInfo = mysql_fetch_assoc(mysql_query("SELECT * FROM users WHERE id = '".$account_information['id']."'"));
 					switch($posterInfo['class']){
-						case blizz:
+						case "blizz":
 							echo'<a class="ui-button button1" href="createthread.php?f='.$forumid.'"><span><span>Create Thread</span></span></a>';
 							break;
 							
-						case mvp:
+						case "mvp":
 							echo'<a class="ui-button button1" href="createthread.php?f='.$forumid.'"><span><span>Create Thread</span></span></a>';
 							break;
 							
@@ -290,11 +290,11 @@ echo '
 						
 						$posterInfo = mysql_fetch_assoc(mysql_query("SELECT * FROM users WHERE id = '".$account_information['id']."'"));
 							switch($posterInfo['class']){
-								case blizz:
+								case "blizz":
 									echo'<a class="ui-button button1" href="createthread.php?f='.$forumid.'"><span><span>Create Thread</span></span></a>';
 									break;
 									
-								case mvp:
+								case "mvp":
 									echo'<a class="ui-button button1" href="createthread.php?f='.$forumid.'"><span><span>Create Thread</span></span></a>';
 									break;
 									
