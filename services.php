@@ -18,16 +18,15 @@
 <!--[if IE 6]><link rel="stylesheet" type="text/css" media="all" href="wow/static/css/wow-ie6.css?v4" /><![endif]-->
 <!--[if IE 7]><link rel="stylesheet" type="text/css" media="all" href="wow/static/css/wow-ie7.css?v4" /><![endif]-->
 <script type="text/javascript" src="wow/static/local-common/js/third-party/jquery-1.4.4.min.js"></script>
-<script type="text/javascript" src="wow/static/local-common/js/core.js?v15"></script>
-<script type="text/javascript" src="wow/static/local-common/js/tooltip.js?v15"></script>
+	<script type="text/javascript" src="wow/static/local-common/js/core.js?v15"></script>
+	<script type="text/javascript" src="wow/static/local-common/js/tooltip.js?v15"></script>
 <!--[if IE 6]> <script type="text/javascript">
 //<![CDATA[
 try { document.execCommand('BackgroundImageCache', false, true) } catch(e) {}
 //]]>
 </script>
-<![endif]-->
-<script type="text/javascript" src="http://cdn1.hikiwake.com/scripts/shared/enable.js?si=10203"></script><script type="text/javascript" onload="" onreadystatechange="" src="http://srchdetect5.predictad.com/scripts/acpro/?MV4xMDIwM15zZWFyY2gtZmllbGR8QHF8QHVpLWF1dG9jb21wbGV0ZS1pbnB1dHxAU2VhcmNoIHRoZSBBcm1vcnksIGZvcnVtcyBhbmQgbW9yZeKApnxAfEBvZmZ8XlNlcnZpY2VzIC0gV29ybGQgb2YgV2FyY3JhZnReXl5zZWFyY2gtZm9ybXxAfEBnZXR8QC93b3cvZW4vc2VhcmNofEB8QC93b3cvZW4vc2VhcmNofF58fHxe"></script><script type="text/javascript" onload="" onreadystatechange="" src="http://cdn1.predictad.com/scripts/acpro/bhocombined.js"></script><style type="text/css" media="screen">div.predictad ul li.selected {background-color:#D5E2FF;border:none;}</style><link class="undefined" style="display: block; " type="text/css" rel="stylesheet" href="http://cdn1.predictad.com/css/skins/mclassic.css" media="screen" /><style type="text/css" media="screen">div.predictad ul li.ad {width:99% !important;}</style></head>
-<body class="en-gb services-home logged-in"><div id="predictad_div" class="predictad" style="display: none; left: 788px; top: 104px; width: 321px; "></div>
+<![endif]--></head>
+<body class="en-gb services-home logged-in">
 
 <div id="wrapper">
 <?php $page_cat="services"; include("header.php"); ?>
@@ -151,13 +150,15 @@ try { document.execCommand('BackgroundImageCache', false, true) } catch(e) {}
 							</div>
 					</div>	
 				</div>
-	<span class="clear"><!-- --></span>
+				<br />
+				<span class="clear"><!-- --></span>
+				<span class="clear"><!-- --></span>
+				<span class="clear"><!-- --></span>
 			</div>
 		</div>
 	</div>
 </div>
 </div>
 </div>
-<?php include("footer.php"); ?>
-<div id="fansite-menu" class="ui-fansite"></div><div id="menu-container" style="top: 260px; position: absolute; visibility: visible; z-index: 75; left: 156px; "><div class="flyout-menu" id="menu-tier-base" style="display: none; "><ul><li><a rel="np" href="wow/en/game/" class="children">Game</a></li><li><a rel="np" href="wow/en/community/">Community</a></li><li><a rel="np" href="wow/en/media/" class="children">Media</a></li><li><a rel="np" href="wow/en/forum/" class="children">Forums</a></li><li><a rel="np" href="wow/en/services/">Services</a></li><li><a rel="np" href="wow/en/search">Search</a></li></ul></div></div><ul class="ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all" role="listbox" aria-activedescendant="ui-active-menuitem" style="z-index: 6; top: 0px; left: 0px; display: none; "></ul></body>
+<?php include("footer.php"); ?></body>
 </html>

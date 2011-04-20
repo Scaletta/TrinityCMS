@@ -1,8 +1,8 @@
 @charset "utf-8";
 
 .services-home #content .content-top {background: url("../../images/services/bg-services-top.jpg") 0 0 no-repeat; }
-.services-home #content .bg-body {background: url("../../images/services/bg-content-body.jpg") 0 0 repeat-y; height:100%;}
-.services-home #content .bg-bottom {background: url("../../images/services/bg-content-bottom.jpg") 0 100% no-repeat; height:100%;}
+.services-home #content .bg-body {background: url("../../images/services/bg-content-body.jpg") 0 0 repeat-y; height:1000px;}
+.services-home #content .bg-bottom {background: url("../../images/services/bg-content-bottom.jpg") 0 100% no-repeat; height:1000px;}
 .services-home #content .contents-wrapper {background: url("../../images/services/bg-services-top.jpg") 0 -40px no-repeat; padding-bottom:60px;  height:100%;}
 
 .services-home #content .section-title {width:330px; padding:0 0 0 28px; padding-bottom:70px; float:left; min-height:183px;}
