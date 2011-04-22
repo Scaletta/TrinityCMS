@@ -62,7 +62,7 @@ See Ya!
 <span>World of Warcraft - Entire World</span>
 </a>
 <br />
-<small>&copy; 2010-2011 World of Warcraft.<br />Website Created by TheAdriann.<br />All Images & Resources are in Blizzard Entertainment Property.</small>
+<small>Copyright &copy; 2011 <?php echo $website['title']; ?>.<br />Powered by TrinityCMS<br />Resources are in Blizzard Entertainment Property.</small>
 </div>
 <div id="international"></div>
 <div id="legal">
@@ -80,7 +80,7 @@ See Ya!
 <?php if(isset($_SESSION['username'])){ ?>
 <li class="service-cell service-welcome">Welcome, <a href=""><?php echo strtolower($_SESSION['username']); ?></a> | <a href="<?php echo $website['root'];?>logout.php">Log Out</a></li>
 <?php }else{ ?>
-<li class="service-cell service-welcome"><a href="?login" onclick="return Login.open('<?php echo $website['root'];?>loginframe.php?<?php echo $_SESSION['sessionid']; ?>')">Log in</a> or <a href="register.php">Create an Account</a></li>
+<li class="service-cell service-welcome"><a href="?login" onclick="return Login.open('<?php echo $website['root'];?>login.php?<?php echo $_SESSION['sessionid']; ?>')">Log in</a> or <a href="register.php">Create an Account</a></li>
 <?php } ?>
 <li class="service-cell service-account"><a href="#" class="service-link" tabindex="50" accesskey="3">Account</a></li>
 <li class="service-cell service-support"><a href="#" class="service-link" tabindex="50" accesskey="4">Support</a></li>

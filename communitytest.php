@@ -14,7 +14,7 @@ require_once("configs.php");
 <!--[if IE 7]><link rel="stylesheet" type="text/css" media="all" href="wow/static/local-common/css/common-ie7.css?v15" /><![endif]-->
 <link title="World of Warcraft - News" href="wow/en/feed/news" type="application/atom+xml" rel="alternate" />
 <link rel="stylesheet" type="text/css" media="all" href="wow/static/css/wow.css?v3" />
-<link rel="stylesheet" type="text/css" media="all" href="wow/static/css/community/community-index.css" />
+<link rel="stylesheet" type="text/css" media="all" href="wow/static/css/community/community-index.css?v3" />
 <!--[if IE]><link rel="stylesheet" type="text/css" media="all" href="wow/static/css/community/community-ie.css?v3" /><![endif]-->
 <!--[if IE 6]><link rel="stylesheet" type="text/css" media="all" href="wow/static/css/community/community-ie6.css?v3" /><![endif]-->
 <!--[if IE]><link rel="stylesheet" type="text/css" media="all" href="wow/static/css/wow-ie.css?v3" /><![endif]-->
@@ -69,7 +69,7 @@ include("header.php");
 
     <div id="slideshow">
         <div class="container">
-				<?php
+			<?php
 				$query = mysql_query("SELECT * FROM community_slides ORDER BY id DESC LIMIT 4");
 				$i=0;
 				while($community = mysql_fetch_array($query)){
@@ -81,43 +81,35 @@ include("header.php");
 					$i++;
 				}
 			?>
+			<!--
+				<div class="slide" id="slide-0" style="background-image: url(http://eu.media4.battle.net/cms/carousel_header/E7ODLCU7DOXM1292427396591.jpg); opacity: 0.997084;"></div>
+				<div class="slide" id="slide-1" style="background-image: url(http://eu.media2.battle.net/cms/carousel_header/XRXPB47F3QF91291995637312.jpg); display: none; "></div>
+				<div class="slide" id="slide-2" style="background-image: url('http://eu.media2.battle.net/cms/carousel_header/LJ9NRL6DTH091288953375465.jpg'); display: none;"></div>
+				<div class="slide" id="slide-3" style="background-image: url('community/community01.png'); display: none;"></div>
+			-->
 		</div>
-
-			<div class="paging">
+		
+		<div class="paging">
 			<?php
 				$query2 = mysql_query("SELECT * FROM community_slides ORDER BY id DESC LIMIT 4");
 				$i=0;
 				while($communityx = mysql_fetch_assoc($query2)){
 					echo '<a href="javascript:;" id="paging-'.$i.'" onclick="Slideshow.jump('.$i.', this);"';
-					if($i==0){ print 'class="curent"'; }else if($i==3){ print 'class="last-slide"'; }else { print 'class=""'; } echo'>
-					<span class="paging-title">'.$communityx['title'].' </span>
-					<span class="paging-date">'.$communityx['date'].'</span></a>';
+					if($i==0){ echo 'class="curent"'; }else if($i==3){ echo 'class="last-slide"'; }
+					echo'>
+					<span class="paging-title">'.$communityx['title'].'</span>
+					<span class="paging-date">'.$communityx['date'].'</span>
+					</a>';
 					$i++;
 				}
 			?>
-					<a href="javascript:;" id="paging-0" onclick="Slideshow.jump(0, this);" class="">
-							<span class="paging-title">Leader of the Alliance and Horde Part 2: Genn Greymane</span>
-							<span class="paging-date">01/24/11</span>
-					</a>
-					<a href="javascript:;" id="paging-1" onclick="Slideshow.jump(1, this);" class="current">
-							<span class="paging-title">New Fan Art </span>
-							<span class="paging-date">12/10/10</span>
-					</a>
-					<a href="javascript:;" id="paging-2" onclick="Slideshow.jump(2, this);" class="">
-							<span class="paging-title">Leaders of the Alliance and Horde Part 1 - Garrosh</span>
-							<span class="paging-date">12/10/10</span>
-					</a>
-					<a href="javascript:;" id="paging-3" onclick="Slideshow.jump(3, this);" class="last-slide">
-							<span class="paging-title">Get into the Warcraft community!</span>
-							<span class="paging-date">12/10/10</span>
-					</a>
-			</div>
+		</div>
 		<?php
 		$query3 = mysql_query("SELECT * FROM community_slides ORDER BY id DESC LIMIT 1");
 		$communityz = mysql_fetch_assoc($query3);
-		echo '<div class="caption" style="display: block;"><h3><a href="#" class="link"> '.$communityz['title'].'</a></h3>'.$communityz['desc'].'</div>';
+		echo '<div class="caption" style="display: block; opacity: 0.958656; "><h3><a href="#" class="link"> '.$communityz['title'].'</a></h3>'.$communityz['desc'].'</div>';
 		?>
-		<div class="preview" style="display: none;"></div>
+		<div class="preview"></div>
 		<div class="mask"></div>
     </div>
 
@@ -126,26 +118,25 @@ include("header.php");
         $(function() {
             Slideshow.initialize('#slideshow', [
 				<?php
-				$getting_lastq = mysql_query("SELECT * FROM community_slides ORDER BY id DESC");
+				$getting_lastq = mysql_query("SELECT * FROM community_slied ORDER BY id DESC");
 				$getting_last = mysql_fetch_assoc($getting_lastq);
 				$last=$getting_last['id']-4;
-				$query = mysql_query("SELECT * FROM community_slides WHERE id >= '".$last."' ORDER BY id DESC LIMIT 4");
+				$query = mysql_query("SELECT * FROM community_slides WHERE id >= '".$last."' ORDER BY id ASC LIMIT 4");
 				$i=0;
-				while($community2 = mysql_fetch_assoc($query)){
+				while($community = mysql_fetch_assoc($query)){
 					echo '
 					{
-					image: "'.$community2['image'].'",
-					desc: "'.$community2['desc'].'",
-                    title: "'.$community2['title'].'",
-                    url: "'.$community2['url'].'",
-					id: "'.$community2['id'].'"
+					image: "'.$community['image'].'",
+					desc: "'.$community['desc'].'",
+                    title: "'.$community['title'].'",
+                    url: "'.$community['url'].'",
+					id: "'.$community['id'].'"
 					}';
 					if($i!=3) echo ',';
 					$i++;
 				}
 				?>
             ]);
-
         });
 	//]]>
 	</script>
@@ -238,18 +229,13 @@ include("header.php");
 										
 					<div class="outside-section social-media">
 						<div class="title-block">
-							<span class="title">Community Links</span>
-						<span class="clear"><!-- --></span>
+							<span class="title">Links</span>
+							<span class="clear"><!-- --></span>
 						</div>
 						<div class="content-block">
 							<ul>
-							<style type="text/css">
-							#wow {
-    background: url("wow/static/images/community/001.png") no-repeat;
-}
-							</style>
-								<li><a href="#" class="facebook" target="_blank"><span class="content-title">TrinityCMS Facebook</span><span class="content-desc">Follow us on Facebook.</span></a></li>
-								<li><a href="#" id="wow" target="_blank"><span class="content-title">TrinityCMS Forum</span><span class="content-desc">Join our community.</span></a></li></ul>
+								<li><a href="http://www.youtube.com" class="youtube" target="_blank"><span class="content-title">Youtube</span><span class="content-desc">YOUTUBE!!</span></a></li>
+							</ul>
 						</div>
 					</div>
 					

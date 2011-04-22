@@ -1,7 +1,7 @@
 <?php if(!isset($_SESSION['username'])){ ?>
 <div class="user-plate ajax-update">
 <div class="user-meta meta-login">
-<a href="?login" onclick="return Login.open('<?php echo $website['root']; ?>loginframe.php?SessionID=<?php echo $_SESSION['sessionid']; ?>')"><strong>Log in</strong></a> with your WoW account to post comments and personalize your site content.
+<a href="?login" onclick="return Login.open('<?php echo $website['root']; ?>login.php?SessionID=<?php echo $_SESSION['sessionid']; ?>')"><strong>Log in</strong></a> with your WoW account to post comments and personalize your site content.
 </div>
 </div>
 <?php }else{

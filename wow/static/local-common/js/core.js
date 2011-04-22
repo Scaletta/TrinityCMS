@@ -20,7 +20,7 @@ var Core = {
 	/**
 	 * Base context URL for the project.
 	 */
-	baseUrl: '/blizzard',
+	baseUrl: '/',
 
 	/**
 	 * The cached string for the browser.
@@ -38,6 +38,11 @@ var Core = {
 	locale: 'en-us',
 
 	/**
+	 * Short date format
+	 */
+	shortDateFormat: 'MM/dd/Y',
+
+	/**
 	 * The current project.
 	 */
 	project: '',
@@ -45,7 +50,8 @@ var Core = {
 	/**
 	 * Path to static content.
 	 */
-	staticUrl: '/blizzard',
+	staticUrl: '/',
+	sharedStaticUrl: '/local-common/',
 
 	/**
 	 * The current host and protocol.
@@ -284,7 +290,9 @@ var Core = {
 	 */
 	goTo: function(url, base) {
 		window.location.href = (base ? Core.baseUrl : '') + url;
-		window.event.returnValue = false;
+
+		if (window.event)
+			window.event.returnValue = false;
 	},
 
 	/**
@@ -477,7 +485,7 @@ var Core = {
 
 		$($.browser.webkit ? 'body' : 'html').animate({
 			scrollTop: top
-		}, 
+		},
 		duration || 350,
 		callback || null);
 	},
@@ -1229,7 +1237,7 @@ var CharSelect = {
 			url: switchUrl,
 			data: {
 				index: index,
-				xstoken: xsToken
+				xstoken: Cookie.read('xstoken')
 			},
 			global: false,
 			success: function(content) {
@@ -1496,6 +1504,8 @@ var Flash = {
          //set flash base and rating image
          Flash.defaultVideoParams.base          = Flash.videoBase;
          Flash.defaultVideoFlashVars.ratingpath = Flash.ratingImage;
+         Flash.defaultVideoFlashVars.locale     = Core.locale;
+         Flash.defaultVideoFlashVars.dateFormat = Core.shortDateFormat;
     },
 
     /**
@@ -1920,6 +1930,7 @@ var BnetAds = {
 	 * @param size
 	 */
 	init: function(target, size){
+
 		$.ajax({
 			url: '/marketing/',
 			data: {
@@ -1929,9 +1940,11 @@ var BnetAds = {
 			},
 			dataType: 'html',
 			success: function(data) {
-				var dataBody = data.substring(data.indexOf('<body>'), data.indexOf('</body>')+7);
+				if (data !== "") {
+					var dataBody = data.substring(data.indexOf('<body>'), data.indexOf('</body>')+7);
 
-				$(target).find('.sidebar-content').html($(dataBody).html()).removeClass('loading');
+					$(target).find('.sidebar-content').html($(dataBody).html()).removeClass('loading');
+				}
 			},
 			error: function() {
 				$(target).remove();
@@ -2077,7 +2090,109 @@ var UserAgent = {
 		$('html').addClass(className);
 	}
 };
-UserAgent.initialize(); // Add classes to <html> immediately to avoid any flickering (don't use document.ready)
+
+/**
+ * Simple API for interacting with the browsers local storage.
+ */
+var Storage = {
+
+	/**
+	 * Does browser support local storage?
+	 */
+	initialized: (window.localStorage),
+
+	/**
+	 * Get item from storage.
+	 *
+	 * @param key
+	 * @return mixed
+	 */
+	get: function(key) {
+		if (Storage.initialized && key)
+			return localStorage.getItem(key);
+
+		return null;
+	},
+
+	/**
+	 * Get all items from storage.
+	 *
+	 * @return mixed
+	 */
+	getAll: function() {
+		var items = [];
+
+		if (!Storage.initialized)
+			return items;
+
+		for (var i = 0, l = localStorage.length, k = null; i < l; i++) {
+			k = localStorage.key(i);
+
+			items.push({
+				key: k,
+				value: localStorage[k]
+			});
+		}
+
+		return items;
+	},
+
+	/**
+	 * Add/set an item into storage.
+	 *
+	 * @param key
+	 * @param value
+	 * @return mixed
+	 */
+	set: function(key, value) {
+		if (Storage.initialized && key) {
+			try {
+				localStorage.setItem(key, value || '');
+			} catch (e) {
+				if (e == QUOTA_EXCEEDED_ERR) {
+					alert('Local storage quota exceeded, please clear your saved data.');
+				}
+			}
+
+			return true;
+		}
+
+		return false;
+	},
+
+	/**
+	 * Clear all stored data.
+	 */
+	clear: function() {
+		if (Storage.initialized)
+			localStorage.clear();
+	},
+
+	/**
+	 * Remove a single item from storage.
+	 *
+	 * @param key
+	 */
+	remove: function(key) {
+		if (Storage.initialized && key)
+			localStorage.removeItem(key);
+	},
+
+	/**
+	 * Get the total items stored.
+	 *
+	 * @return int
+	 */
+	size: function() {
+		return localStorage.length || 0;
+	}
+
+};
+
+/**
+ * Load asynchronously.
+ */
+UserAgent.initialize();
 
 /**
  * Prototype overwrites.
@@ -2085,6 +2200,73 @@ UserAgent.initialize(); // Add classes to <html> immediately to avoid any flicke
 String.prototype.trim = function() {
 	return $.trim(this);
 };
+
+/**
+ * Simple JavaScript Inheritance
+ * By John Resig http://ejohn.org/
+ * MIT Licensed.
+ */
+(function() {
+	var initializing = false,
+		fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
+
+	// The base Class implementation (does nothing)
+	this.Class = function() {};
+
+	// Create a new Class that inherits from this class
+	Class.extend = function(prop) {
+		var _super = this.prototype;
+
+		// Instantiate a base class (but only create the instance, don't run the init constructor)
+		initializing = true;
+		var prototype = new this();
+		initializing = false;
+
+		// Copy the properties over onto the new prototype
+		for (var name in prop) {
+			// Check if we're overwriting an existing function
+			prototype[name] =
+				(typeof prop[name] == "function" && typeof _super[name] == "function" && fnTest.test(prop[name]))
+			?
+				(function(name, fn) {
+					return function() {
+						var tmp = this._super;
+
+						// Add a new ._super() method that is the same method
+						// but on the super-class
+						this._super = _super[name];
+
+						// The method only need to be bound temporarily, so we
+						// remove it when we're done executing
+						var ret = fn.apply(this, arguments);
+						this._super = tmp;
+
+						return ret;
+					};
+				})(name, prop[name])
+			:
+				prop[name];
+		}
+
+		// The dummy class constructor
+		function Class() {
+			// All construction is actually done in the init method
+			if (!initializing && this.init)
+				this.init.apply(this, arguments);
+		}
+
+		// Populate our constructed prototype object
+		Class.prototype = prototype;
+
+		// Enforce the constructor to be what we expect
+		Class.constructor = Class;
+
+		// And make this class extendable
+		Class.extend = arguments.callee;
+
+		return Class;
+	};
+})();
 
 /**
  * Setup ajax calls.

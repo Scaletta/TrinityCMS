@@ -132,8 +132,8 @@ $page_cat = "home";
 								$new = 0;
 							}
 							
-							$news_first= $new ? $new : 9999999999;
-							$news_query = ("SELECT * FROM news WHERE id <=$news_first ORDER BY `id` desc LIMIT 6");
+							$news_first = $new ? $new : 9999999999;
+							$news_query = ("SELECT * FROM news WHERE id <= '".$news_first."' ORDER BY `id` desc LIMIT 6");
 							$news_query = mysql_query($news_query);
 							$counter = 1;
 							
@@ -236,5 +236,6 @@ $page_cat = "home";
 		</div>
 	</div>
 	<?php include("footer.php"); ?>
+</div>
 </body>
 </html>

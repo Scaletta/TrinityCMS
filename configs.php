@@ -21,7 +21,7 @@ $server_adb = "em_auth"; //Your account database
 $server_cdb = "em_chars"; //Your characters database
 $server_wdb = "em_world"; //Your world database
 
-$website['title'] = "World of Warcraft";
+$website['title'] = "TrinityCMS";
 $website['address'] = "http://theadriann.zapto.org/TrinityCMS/"; // 'http://url/foldername/' or 'http://url/'
 $website['root'] = "/TrinityCMS/"; // '/' <- for root and '/foldername/' <- for any folder
 //Initialize Lang Files
